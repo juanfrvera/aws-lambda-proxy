@@ -6,6 +6,7 @@ import { executeMiddlewares } from "./utils/middlewares";
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<IHttpResponse> => {
     try {
+        console.log(event);
         const { action, middlewares } = router(event, routes);
         executeMiddlewares(event, middlewares);
 
