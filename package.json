@@ -1,0 +1,20 @@
+{
+  "name": "aws-from-zero",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "npx nodemon",
+    "build": "npm install && rm -rf ./dist && tsc",
+    "deploy": "rm -rf node_modules && npm install --omit=dev && zip function.zip ./dist ./node_modules -r"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.116",
+    "@types/node": "^20.2.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  }
+}
