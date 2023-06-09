@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "npx nodemon",
-    "build": "npm install && rm -rf ./dist && tsc",
-    "deploy": "rm -rf node_modules && npm install --omit=dev && zip function.zip ./dist ./node_modules -r"
+    "build": "rm -rf node_modules && npm install --omit=dev && rm -rf ./dist && tsc",
+    "deploy": "zip function.zip ./dist ./node_modules -r && aws lambda update-function-code --function-name lambda-proxy --zip-file fileb://function.zip"
   },
   "author": "",
   "license": "ISC",

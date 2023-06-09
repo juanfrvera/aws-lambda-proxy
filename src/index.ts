@@ -6,9 +6,8 @@ import { executeMiddlewares } from "./utils/middlewares";
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<IHttpResponse> => {
     try {
-        console.log(event);
         const { action, middlewares } = router(event, routes);
-        executeMiddlewares(event, middlewares);
+        await executeMiddlewares(event, middlewares);
 
         const controllerResponse = await action(event);
 
@@ -19,15 +18,11 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<IHttpRespons
     } catch (error) {
         if (error instanceof Error) {
             if (error.message === "route_not_found") {
-                return {
-                    statusCode: 404,
-                    body: "route not found"
-                }
+                return { statusCode: 404, body: "route not found" };
+            } else if (error.message === "unauthenticated") {
+                return { statusCode: 401, body: "User Unauthenticated" };
             }
         }
-        return {
-            statusCode: 500,
-            body: "unexpected error"
-        }
+        return { statusCode: 500, body: "unexpected error" };
     }
 };
