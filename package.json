@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "npx nodemon",
-    "build": "rm -rf node_modules && npm install --omit=dev && rm -rf ./dist && tsc",
-    "deploy": "zip function.zip ./dist ./node_modules -r && aws lambda update-function-code --function-name lambda-proxy --zip-file fileb://function.zip"
+    "build": "rm -rf ./dist && tsc",
+    "start:dev": "node ./dist/run",
+    "build:prod": "rm -rf ./dist && tsc && rm -rf node_modules && npm install --omit=dev",
+    "deploy": "zip function.zip ./dist ./node_modules -r && aws lambda update-function-code --function-name lambda-proxy --zip-file fileb://function.zip",
+    "build-and-deploy": "npm run build:prod && npm run deploy"
   },
   "author": "",
   "license": "ISC",
@@ -16,5 +18,8 @@
     "@types/node": "^20.2.5",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "jose": "^4.14.4"
   }
 }

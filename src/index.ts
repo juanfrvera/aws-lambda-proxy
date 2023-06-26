@@ -6,14 +6,15 @@ import { executeMiddlewares } from "./utils/middlewares";
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<IHttpResponse> => {
     try {
+        console.log(event);
         const { action, middlewares } = router(event, routes);
         await executeMiddlewares(event, middlewares);
 
-        const controllerResponse = await action(event);
+        const res = await action(event);
 
         return {
-            statusCode: controllerResponse.statusCode,
-            body: JSON.stringify(controllerResponse.body)
+            statusCode: res.statusCode,
+            body: JSON.stringify(res.body)
         };
     } catch (error) {
         if (error instanceof Error) {
@@ -23,6 +24,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<IHttpRespons
                 return { statusCode: 401, body: "User Unauthenticated" };
             }
         }
+        console.error(error);
         return { statusCode: 500, body: "unexpected error" };
     }
 };
