@@ -12,7 +12,7 @@ export const authenticationMiddleware = async (event: APIGatewayProxyEvent) => {
         }
         throw new Error("unauthenticated");
     } catch (error) {
-        if (error instanceof jose.errors.JWSInvalid) {
+        if (error instanceof jose.errors.JWSInvalid || error instanceof jose.errors.JWTExpired) {
             throw new Error("unauthenticated");
         }
         throw error;

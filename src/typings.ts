@@ -21,3 +21,8 @@ export interface IHttpResponse {
     statusCode: number;
     body: string;
 }
+
+export interface IUser {
+    username: string;
+    password: string;
+}
